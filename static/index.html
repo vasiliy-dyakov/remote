@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html ng-controller="htmlController">
+<html>
 <head>
     <meta charset="utf-8">
-    <title ng-bind="head.title"></title>
+    <title ng-bind="$root.pageTitle"></title>
     <link rel="stylesheet/less" type="text/css" href="app.less" />
     <script src="libs/less/dist/less.js" type="text/javascript"></script>
-</head>
-<body>
-    <div app></div>
     <script data-main="../../app.js" src="libs/requirejs/require.js"></script>
+</head>
+<body ng-controller="mainController">
+    <div ui-view="header"></div>
+    <div ui-view="left"></div>
+    <div ui-view="content"></div>
+    <div ui-view="footer"></div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 define([
-    'html-controller'
+    'main-controller'
 ].map(function(item) {
     return 'controllers/' + item;
 }));
