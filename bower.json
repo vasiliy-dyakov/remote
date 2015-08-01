@@ -1,0 +1,25 @@
+{
+  "name": "remote",
+  "version": "0.0.1",
+  "homepage": "https://github.com/vasiliy-dyakov/tyv",
+  "authors": [
+    "Vasiliy Dyakov <vasilij.dyakov@gmail.com>"
+  ],
+  "description": "Site for remote work for groups of developers",
+  "license": "Private",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test"
+  ],
+  "dependencies": {
+    "angular": "1.4.3",
+    "angular-mocks": "1.4.3",
+    "bootstrap": "3.3.5",
+    "angular-route": "1.4.3",
+    "lodash": "3.10.0",
+    "angular-cookies": "1.4.3",
+    "requirejs": "2.1.20"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "remote",
+  "version": "0.0.1",
+  "description": "Site for remote work for groups of developers",
+  "author": "Vasiliy Dyakov",
+  "dependencies": {},
+  "devDependencies": {
+    "bower": "1.4.1",
+    "connect": "3.4.0",
+    "git-hooks": "1.0.0-rc.4",
+    "jasmine-core": "2.3.4",
+    "jscs": "2.0.0",
+    "jshint": "2.8.0",
+    "jshint-groups": "0.8.0",
+    "karma": "0.13.3",
+    "karma-chrome-launcher": "0.2.0",
+    "karma-jasmine": "0.3.6",
+    "karma-requirejs": "0.2.2",
+    "lodash": "3.10.0",
+    "protractor": "2.1.0",
+    "requirejs": "2.1.20",
+    "serve-static": "1.10.0",
+    "sync-prompt": "0.4.2"
+  }
+}
