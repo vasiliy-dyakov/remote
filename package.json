@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Site for remote work for groups of developers",
   "author": "Vasiliy Dyakov",
+  "private": true,
   "dependencies": {},
   "devDependencies": {
     "bower": "1.4.1",
