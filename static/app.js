@@ -5,7 +5,7 @@ require.config({
         angular: { exports: 'angular' },
         'angular-ui-router': ['angular']
     },
-    baseUrl: './',
+    baseUrl: '/static',
     paths: {
         lodash: 'libs/lodash/lodash',
         angular: 'libs/angular/angular',

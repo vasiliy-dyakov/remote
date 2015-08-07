@@ -4,7 +4,10 @@
   "description": "Site for remote work for groups of developers",
   "author": "Vasiliy Dyakov",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.13.3",
+    "fs": "0.0.2"
+  },
   "devDependencies": {
     "bower": "1.4.1",
     "connect": "3.4.0",

@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title ng-bind="$root.pageTitle"></title>
-    <link rel="stylesheet/less" type="text/css" href="app.less" />
-    <script src="libs/less/dist/less.js" type="text/javascript"></script>
-    <script data-main="../../app.js" src="libs/requirejs/require.js"></script>
+    <link rel="stylesheet/less" type="text/css" href="{{staticDir}}/app.less" />
+    <script src="{{staticDir}}/libs/less/dist/less.js" type="text/javascript"></script>
+    <script data-main="/static/app.js" src="{{staticDir}}/libs/requirejs/require.js"></script>
 </head>
 <body ng-controller="mainController">
     <div ui-view="header"></div>
