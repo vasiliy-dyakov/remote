@@ -1,5 +1,6 @@
 define([
-    'main-controller'
+    'main-controller',
+    'promo-controller'
 ].map(function(item) {
     return 'controllers/' + item;
 }));
