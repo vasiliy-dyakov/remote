@@ -5,18 +5,14 @@ var app = require('express')(),
     staticDir = rootDir + '/static',
     clientStaticDir = '/static';
 
-app.get('/*', function(request, response) {
-    var path = request.path;
+app.get('/static/*', function(request, response) {
+    response.sendFile(rootDir + request.path);
+});
 
-    response.send(
-        /^\/static\//.test(path)
-            ? fs.readFileSync(rootDir + path, {
-                encoding: 'utf8'
-            })
-            : fs.readFileSync(staticDir + '/views/app.html', {
-                encoding: 'utf8'
-            }).replace(/\{\{staticDir\}\}/g, clientStaticDir)
-    );
+app.get('/*', function(request, response) {
+    response.send(fs.readFileSync(staticDir + '/views/app.html', {
+        encoding: 'utf8'
+    }).replace(/\{\{staticRoot\}\}/g, clientStaticDir));
 });
 
 app.listen(port);
