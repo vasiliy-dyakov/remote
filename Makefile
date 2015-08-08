@@ -13,7 +13,7 @@ $(LIBS): $(NPM_ROOT)
 
 .PHONY: server
 server: $(NPM_ROOT)
-	@node server/index.js
+	@node server/app.js
 
 .PHONY: lint
 lint: $(NPM_ROOT)

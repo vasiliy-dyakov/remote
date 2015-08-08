@@ -26,10 +26,10 @@ require([
 
     require([
         'configs/configs',
+        'services/services',
         'controllers/controllers',
         'directives/directives',
-        'filters/filters',
-        'services/services'
+        'filters/filters'
     ], function() {
         angular.bootstrap(document, ['app']);
     });

@@ -13,7 +13,7 @@ app.get('/*', function(request, response) {
             ? fs.readFileSync(rootDir + path, {
                 encoding: 'utf8'
             })
-            : fs.readFileSync(staticDir + '/index.html', {
+            : fs.readFileSync(staticDir + '/views/app.html', {
                 encoding: 'utf8'
             }).replace(/\{\{staticDir\}\}/g, clientStaticDir)
     );
