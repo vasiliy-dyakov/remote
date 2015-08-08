@@ -4,23 +4,29 @@ module.exports = function(config){
     basePath : '../',
 
     files : [
-        'static/common.js',
-        'test/common.js',
-        { included: false, pattern: 'test/unit/**/*.js' },
-        { included: false, pattern: 'static/js/**/*.js' },
-        { included: false, pattern: 'static/libs/**/*.js' }
+        'static/libs/angular/angular.js',
+        'static/libs/angular-mocks/angular-mocks.js',
+        'static/libs/lodash/lodash.js',
+        'test/app.js',
+        'static/services/**/*.js',
+        'static/controllers/**/*.js',
+        'test/unit/**/*.js',
+    ],
+
+    exclude: [
+        'static/controllers/controllers.js',
+        'static/services/services.js'
     ],
 
     autoWatch : true,
 
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['jasmine'],
 
     browsers : ['Chrome'],
 
     plugins : [
         'karma-chrome-launcher',
-        'karma-jasmine',
-        'karma-requirejs'
+        'karma-jasmine'
     ],
 
     junitReporter : {

@@ -1,11 +1,7 @@
-app.config(function($stateProvider, $provide) {
+app.config(function($stateProvider) {
     var staticRoot = function(path) {
-        return 'static' + path;
+        return '/static' + path;
     };
-
-    $provide.factory('staticRoot', function() {
-        return staticRoot;
-    });
 
     $stateProvider
         .state('index', {

@@ -1,7 +1,7 @@
 /**
  * Управляет содержимым страницы
  */
-app.controller('mainController', function($scope, staticRoot) {
+app.controller('mainController', function($scope, path) {
     $scope.$root.pageTitle = 'Hi!';
-    $scope.$root.staticRoot = staticRoot;
+    $scope.$root.staticRoot = path.staticRoot;
 });
