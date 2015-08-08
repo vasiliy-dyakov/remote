@@ -9,8 +9,7 @@ module.exports = function(config){
         'static/libs/lodash/lodash.js',
         'test/app.js',
         'static/services/**/*.js',
-        'static/controllers/**/*.js',
-        'test/unit/**/*.js',
+        'static/controllers/**/*.js'
     ],
 
     exclude: [
