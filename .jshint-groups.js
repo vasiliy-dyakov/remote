@@ -66,8 +66,7 @@ module.exports = {
         nonstandard: false,      // Widely adopted globals (escape, unescape, etc)
 
         // Custom Globals
-        globals: {}              // additional predefined global variables
-
+        globals: {} // additional predefined global variables
     },
 
     groups: {
@@ -76,12 +75,31 @@ module.exports = {
                 browser: true,
                 debug: false,
                 devel: false,
-                jquery: true,
-                predef: ['angular', '_'],
-                sub: true
+                jquery: false,
+                predef: ['require', 'define', 'STATIC_ROOT'],
+                sub: true,
+                globals: { app: true } // additional predefined global variables
             },
             includes: [
                 'static/**/*.js'
+            ],
+            excludes: [
+                'static/libs/**',
+                'static/**/*.test.js'
+            ]
+        },
+        test: {
+            options: {
+                browser: true,
+                debug: false,
+                devel: false,
+                jquery: false,
+                predef: ['_', 'STATIC_ROOT', 'module', 'describe', 'inject', 'it', 'expect', 'beforeEach', 'afterEach'],
+                sub: true,
+                globals: { app: true } // additional predefined global variables
+            },
+            includes: [
+                'static/**/*test.js'
             ]
         }
     }

@@ -4,7 +4,9 @@
         ".githooks/**",
         "static/libs/**",
         "node_modules/**",
-        "*.json"
+        "*.json",
+        "test/karma.conf.js",
+        "test/protractor.conf.js"
     ],
     "requireCurlyBraces": [
         "if",
@@ -62,9 +64,6 @@
     "disallowMultipleLineBreaks": true,
     "disallowKeywordsOnNewLine": ["catch", "else"],
     "requireLineFeedAtFileEnd": true,
-    "validateJSDoc": {
-        "checkParamNames": true
-    },
     "requireSpacesInsideObjectBrackets": "all",
     "disallowSpacesInsideArrayBrackets": true,
     "disallowSpacesInsideParentheses": true,
@@ -95,7 +94,6 @@
         "beforeOpeningRoundBrace": true
     },
     "requireBlocksOnNewline": true,
-    "requirePaddingNewlinesInBlocks": 3,
     "disallowEmptyBlocks": true,
     "disallowQuotedKeysInObjects": "allButReserved",
     "disallowSpaceAfterObjectKeys": true,
