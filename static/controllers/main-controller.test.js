@@ -1,9 +1,7 @@
-describe('mainController', function() {
+describe('Controller mainController', function() {
     var scope;
 
-    beforeEach(function() {
-        beforeEach(module('app'));
-    })
+    beforeEach(module('app'));
 
     beforeEach(inject(function($rootScope, $controller) {
         scope = $rootScope.$new();
@@ -13,11 +11,11 @@ describe('mainController', function() {
     }));
 
     it('should set title value equal Hi!', function() {
-        expect(scope.$root.pageTitle).toBe('Hi!');
+        expect(scope.$root.pageTitle).toEqual('Hi!');
     });
 
-    it('$root.staticRoot must be defined', function() {
+    it('should define $root.staticRoot', function() {
         expect(scope.$root.staticRoot).toBeDefined();
-        expect(scope.$root.staticRoot('/views/app.less')).toBe('/static/views/app.less');
+        expect(typeof scope.$root.staticRoot).toEqual('function');
     });
 });
