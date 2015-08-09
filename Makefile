@@ -21,21 +21,21 @@ lint: $(NPM_ROOT)
 	@$(NPM_BIN)/jscs .
 
 KARMA_START = $(NPM_ROOT)/karma/bin/karma start test/karma.conf.js
-.PHONY: test-unit
-test-unit: $(NPM_ROOT)
+.PHONY: unit
+unit: $(NPM_ROOT)
 	@$(KARMA_START)
 
-.PHONY: test-unit-single
-test-unit-single: $(NPM_ROOT)
+.PHONY: unit-single
+unit-single: $(NPM_ROOT)
 	$(KARMA_START) --single-run=true
 
-.PHONY: test-e2e
+.PHONY: e2e
 WEB_DRIVER = $(NPM_ROOT)/protractor/selenium
-test-e2e: $(WEB_DRIVER)
+e2e: $(WEB_DRIVER)
 	$(NPM_BIN)/protractor test/protractor.conf.js
 
 .PHONY: test
-test: test-unit-single test-e2e
+test: unit-single e2e
 
 $(WEB_DRIVER): $(NPM_ROOT)
 	$(NPM_BIN)/webdriver-manager update
