@@ -1,4 +1,4 @@
-describe('index page', function() {
+describe('Index page', function() {
     beforeEach(function() {
         browser.get('/');
     });
