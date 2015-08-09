@@ -27,18 +27,21 @@ unit: $(NPM_ROOT)
 
 .PHONY: unit-single
 unit-single: $(NPM_ROOT)
-	$(KARMA_START) --single-run=true
+	@$(KARMA_START) --single-run=true
 
 .PHONY: e2e
 WEB_DRIVER = $(NPM_ROOT)/protractor/selenium
+SERVER_FOR_E2E = node server/app.js 4000
 e2e: $(WEB_DRIVER)
+	@$(SERVER_FOR_E2E)&
 	$(NPM_BIN)/protractor test/protractor.conf.js
+	@kill -9 $$(ps aux | grep '\snode server/app.js 4000' | awk '{print $$2}')
 
 .PHONY: test
 test: unit-single e2e
 
 $(WEB_DRIVER): $(NPM_ROOT)
-	$(NPM_BIN)/webdriver-manager update
+	@$(NPM_BIN)/webdriver-manager update
 
 .PHONY: clean
 clean:
