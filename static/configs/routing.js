@@ -9,8 +9,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             views: {
                 header: { templateUrl: staticRoot('/views/layout/header.html') },
                 promo: { templateUrl: staticRoot('/views/promo/promo.html') },
-                left: { templateUrl: staticRoot('/views/layout/left.html') },
-                content: { templateUrl: staticRoot('/views/layout/content.html') },
+                content: { templateUrl: staticRoot('/views/pages/index.html') },
                 footer: { templateUrl: staticRoot('/views/layout/footer.html') }
             }
         })
@@ -18,6 +17,14 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: '^/second',
             views: {
                 header: { templateUrl: staticRoot('/views/layout/header.html') },
+                footer: { templateUrl: staticRoot('/views/layout/footer.html') }
+            }
+        })
+        .state('demo', {
+            url: '^/demo',
+            views: {
+                header: { templateUrl: staticRoot('/views/layout/header.html') },
+                content: {templateUrl: staticRoot('/views/pages/demo.html')},
                 footer: { templateUrl: staticRoot('/views/layout/footer.html') }
             }
         });
