@@ -19,12 +19,14 @@ module.exports = function(config) {
         'static/libs/lodash/lodash.js',
         'test/app.js',
         'static/controllers/**/*.js',
+        'static/directives/**/*.js',
         'static/services/**/*.js'
     ],
 
     // list of files to exclude
     exclude: [
       'static/controllers/controllers.js',
+      'static/directives/directives.js',
       'static/services/services.js'
     ],
 
