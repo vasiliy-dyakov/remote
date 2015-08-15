@@ -1,0 +1,5 @@
+<form action="{{formConfig.action}}">
+    <div ng-repeat="field in formConfig.fields">
+        <ng-include src="field.templateUrl"></ng-include>
+    </div>
+</form>

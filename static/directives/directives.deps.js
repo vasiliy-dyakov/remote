@@ -1,5 +1,6 @@
 define([
-    'content'
+    'content',
+    'form-by-config'
 ].map(function(item) {
     return 'directives/' + item;
 }));

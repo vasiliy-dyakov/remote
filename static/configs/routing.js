@@ -24,7 +24,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: '^/demo',
             views: {
                 header: { templateUrl: staticRoot('/views/header/header.html') },
-                content: { templateUrl: staticRoot('/views/pages/demo.html') },
+                content: {
+                    controller: 'pageDemoController',
+                    templateUrl: staticRoot('/views/pages/demo.html')
+                },
                 footer: { templateUrl: staticRoot('/views/footer/footer.html') }
             }
         });
