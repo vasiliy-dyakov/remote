@@ -25,11 +25,11 @@ require([
     });
 
     require([
-        'configs/configs',
-        'services/services',
-        'controllers/controllers',
-        'directives/directives',
-        'filters/filters'
+        'configs/configs.deps',
+        'services/services.deps',
+        'controllers/controllers.deps',
+        'directives/directives.deps',
+        'filters/filters.deps'
     ], function() {
         angular.bootstrap(document, ['app']);
     });

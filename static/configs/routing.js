@@ -7,25 +7,25 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         .state('index', {
             url: '/',
             views: {
-                header: { templateUrl: staticRoot('/views/layout/header.html') },
+                header: { templateUrl: staticRoot('/views/header/header.html') },
                 promo: { templateUrl: staticRoot('/views/promo/promo.html') },
                 content: { templateUrl: staticRoot('/views/pages/index.html') },
-                footer: { templateUrl: staticRoot('/views/layout/footer.html') }
+                footer: { templateUrl: staticRoot('/views/footer/footer.html') }
             }
         })
         .state('second', {
             url: '^/second',
             views: {
-                header: { templateUrl: staticRoot('/views/layout/header.html') },
-                footer: { templateUrl: staticRoot('/views/layout/footer.html') }
+                header: { templateUrl: staticRoot('/views/header/header.html') },
+                footer: { templateUrl: staticRoot('/views/footer/footer.html') }
             }
         })
         .state('demo', {
             url: '^/demo',
             views: {
-                header: { templateUrl: staticRoot('/views/layout/header.html') },
+                header: { templateUrl: staticRoot('/views/header/header.html') },
                 content: { templateUrl: staticRoot('/views/pages/demo.html') },
-                footer: { templateUrl: staticRoot('/views/layout/footer.html') }
+                footer: { templateUrl: staticRoot('/views/footer/footer.html') }
             }
         });
 
