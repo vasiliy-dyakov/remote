@@ -34,8 +34,7 @@ WEB_DRIVER = $(NPM_ROOT)/protractor/selenium
 SERVER_FOR_E2E = node server/app.js 4000
 e2e: $(WEB_DRIVER)
 	@$(SERVER_FOR_E2E)&
-	$(NPM_BIN)/protractor test/protractor.conf.js
-	@kill -9 $$(ps aux | grep '\s$(SERVER_FOR_E2E)' | awk '{print $$2}')
+	@$(NPM_BIN)/protractor test/protractor.conf.js; kill -9 $$(ps aux | grep '\s$(SERVER_FOR_E2E)' | awk '{print $$2}')
 
 .PHONY: test
 test: unit-single e2e
