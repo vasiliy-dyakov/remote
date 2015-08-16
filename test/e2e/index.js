@@ -9,6 +9,6 @@ describe('Index page', function() {
 
     it('should have title', function() {
         expect(browser.getTitle()).toBeDefined(true);
-        expect(browser.getTitle()).toBe('Hi!');
+        expect(browser.getTitle()).toBe('Удаленная работа в команде');
     });
 });
