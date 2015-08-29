@@ -5,6 +5,7 @@ app.controller('pageDemoController', function($scope) {
             type: 'text',
             name: 'city',
             placeholder: 'Укажите город',
+            title: 'Место рождения',
             value: ''
         }]
     };

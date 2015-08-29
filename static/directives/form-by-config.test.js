@@ -34,5 +34,6 @@ describe('Directive formByConfig', function() {
         element.scope().$digest();
 
         expect(element.scope().formConfig.fields[0].name).toEqual('city');
+        expect(element.scope().formConfig.fields[0].templateUrl).toEqual(staticRoot('/views/fields/text.html'));
     });
 });
