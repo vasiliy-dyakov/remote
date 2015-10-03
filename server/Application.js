@@ -1,6 +1,8 @@
 import express from 'express';
-import env from '../configs/env';
 import debug from 'debug';
+import React from 'react';
+import env from '../configs/env';
+import routes from '../configs/routes';
 
 var logInfo = debug('Application:info');
 
@@ -19,6 +21,16 @@ export default class Application {
     }
 
     requestHandler(request, response) {
-        response.send('Hello World');
+        logInfo('Запросили путь', request.path);
+
+        var PageComponent = require('../pages/' + this.getPageComponent(request.path));
+
+        response.send(React.renderToString(React.createElement(PageComponent, {
+            context: {}
+        })));
+    }
+
+    getPageComponent(path) {
+        return routes[path] || 'error404Page.jsx';
     }
 }
