@@ -6,13 +6,19 @@ var logInfo = debug('Application:info');
 
 export default class Application {
     constructor() {
+        this.initServer();
+    }
+
+    initServer() {
         var server = express();
 
-        server.get('/*', (request, response) => {
-            response.send('Hello World');
-        });
+        server.get('/*', this.requestHandler.bind(this));
 
         server.listen(env.PORT);
         logInfo('Server listen port', env.PORT);
+    }
+
+    requestHandler(request, response) {
+        response.send('Hello World');
     }
 }
