@@ -4,6 +4,7 @@ import React from 'react';
 import dispatchr from 'dispatchr';
 import env from '../configs/env';
 import routes from '../configs/routes';
+import registeredStores from '../configs/registeredStores';
 
 var logInfo = debug('Application:info');
 
@@ -23,11 +24,13 @@ export default class Application {
 
     requestHandler(request, response) {
         logInfo('Запросили путь', request.path);
-        var dispatcherInstance = dispatchr.createDispatcher(),
+        var dispatcherInstance = dispatchr.createDispatcher({
+                stores: registeredStores
+            }),
             PageComponent = require('../pages/' + this.getPageComponent(request.path));
 
         response.send(React.renderToString(React.createElement(PageComponent, {
-            context: dispatcherInstance.createContext()
+            context: dispatcherInstance.createContext({})
         })));
     }
 
