@@ -1,6 +1,7 @@
 import express from 'express';
 import debug from 'debug';
 import React from 'react';
+import dispatchr from 'dispatchr';
 import env from '../configs/env';
 import routes from '../configs/routes';
 
@@ -22,11 +23,11 @@ export default class Application {
 
     requestHandler(request, response) {
         logInfo('Запросили путь', request.path);
-
-        var PageComponent = require('../pages/' + this.getPageComponent(request.path));
+        var dispatcherInstance = dispatchr.createDispatcher(),
+            PageComponent = require('../pages/' + this.getPageComponent(request.path));
 
         response.send(React.renderToString(React.createElement(PageComponent, {
-            context: {}
+            context: dispatcherInstance.createContext()
         })));
     }
 
