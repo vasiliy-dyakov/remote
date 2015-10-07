@@ -14,7 +14,7 @@ server: $(NPM_ROOT)
 .PHONY: lint
 lint: $(NPM_ROOT)
 	@$(NPM_BIN)/jshint-groups
-	@$(NPM_BIN)/jscs --esnext .
+	@$(NPM_BIN)/jscs .
 
 KARMA_START = $(NPM_ROOT)/karma/bin/karma start test/karma.conf.js
 .PHONY: unit
