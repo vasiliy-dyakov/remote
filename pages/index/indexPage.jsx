@@ -1,15 +1,13 @@
 import React from 'react';
+import PageComponent from '../../common/PageComponent';
 import Layout from '../../blocks/layout/LayoutCommon.jsx';
 
-class IndexPage extends React.Component {
+export default class IndexPage extends PageComponent {
+    static actions = ['cookie/parse'];
+
     render() {
         return <Layout context={this.props.context}>
             Content is here.
         </Layout>;
     }
 }
-
-IndexPage.actions = ['cookie/parse'];
-
-export default IndexPage;
-

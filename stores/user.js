@@ -1,23 +1,20 @@
-import createStore from 'dispatchr/addons/createStore';
+import Store from '../common/Store';
 
-export default createStore({
-    storeName: 'user',
+export default class UserStore extends Store {
+    static storeName = 'user';
 
-    initialize() {
-        this.info = {
-            anonymus: true
-        };
-    },
-
-    handlers: {
+    static handlers = {
         GET_USER_INFO: 'getUserInfo'
-    },
+    };
 
-    getState() {
-        return this.info;
-    },
+    constructor() {
+        super();
+        this.setState({
+            anonymus: true
+        });
+    }
 
     getUserInfo(payload) {
-        this.info = payload;
+        this.setState(payload);
     }
-});
+}
