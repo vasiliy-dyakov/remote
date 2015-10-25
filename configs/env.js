@@ -1,10 +1,5 @@
-import _ from 'lodash';
-
-var env = _.defaults(process.env, {
+export default {
     NODE_ENV: 'development',
     PORT: 3000,
-    DEBUG: 'Application:*'
-});
-
-export default env;
-
+    DEBUG: 'framework:*'
+};
