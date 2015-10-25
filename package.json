@@ -5,24 +5,25 @@
   "author": "Vasiliy Dyakov",
   "private": true,
   "dependencies": {
-    "babel": "^5.8.23",
-    "babel-jscs": "^2.0.4",
-    "babel-runtime": "^5.8.25",
-    "bluebird": "^2.10.2",
-    "debug": "^2.2.0",
-    "dispatchr": "^0.3.3",
-    "express": "^4.13.3",
+    "babel": "5.8.23",
+    "babel-jscs": "2.0.4",
+    "babel-runtime": "5.8.25",
+    "bluebird": "2.10.2",
+    "debug": "2.2.0",
+    "dispatchr": "0.3.3",
+    "express": "4.13.3",
     "fs": "0.0.2",
-    "less": "^2.5.3",
+    "less": "2.5.3",
     "lodash": "3.10.0",
-    "react": "^0.13.3"
+    "react": "0.13.3"
   },
   "devDependencies": {
     "git-hooks": "1.0.0-rc.4",
     "jscs": "2.0.0",
     "jshint": "2.8.0",
     "jshint-groups": "0.8.0",
-    "node-inspector": "^0.12.3",
-    "webpack": "^1.12.2"
+    "jsxhint": "0.15.1",
+    "node-inspector": "0.12.3",
+    "webpack": "1.12.2"
   }
 }
