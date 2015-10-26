@@ -8,15 +8,27 @@ var dispatcher = dispatchr.createDispatcher({
 
 export default class Context {
     constructor() {
-        // TODO: executeAction должен быть частью context
-        this.context = dispatcher.createContext({});
+        this._context = dispatcher.createContext({});
     }
 
-    executeAction(action) {
-        return new Promise((resolve) => {
+    executeAction(action, payload) {
+        return new Promise((resolve, reject) => {
             // TODO: на клиенте require не хотелось бы использовать
-            require('../actions/' + action)(this.context, {}, resolve);
+            require('../actions/' + action)(this._context, payload, (error, payload) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(payload);
+                }
+            });
         });
     }
 
+    dispatch(...options) {
+        return this._context.dispatch(...options);
+    }
+
+    getStore(...options) {
+        return this._context.getStore(...options);
+    }
 }

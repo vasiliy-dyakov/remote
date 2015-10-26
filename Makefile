@@ -9,7 +9,7 @@ $(NPM_ROOT):
 
 .PHONY: server
 server: $(NPM_ROOT)
-	@node server/app.js
+	@node server/index.js
 
 .PHONY: lint
 lint: $(NPM_ROOT)

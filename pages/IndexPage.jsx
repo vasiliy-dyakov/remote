@@ -4,7 +4,7 @@ import Layout from '../blocks/layout/LayoutCommon.jsx';
 
 export default class IndexPage extends PageComponent {
     static actions = {
-        'cookie/parse': true
+        'cookieParse': true
     };
 
     render() {

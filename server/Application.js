@@ -6,7 +6,8 @@ import Promise from 'bluebird';
 import routes from '../configs/routes';
 import Context from '../common/Context';
 
-var logInfo = debug('framework:info:Application');
+var logInfo = debug('framework:info:Application'),
+    logError = debug('framework:error:Application');
 
 export default class Application {
     constructor() {
@@ -30,16 +31,18 @@ export default class Application {
             PageComponent = !_.isUndefined(route) ? require(`../pages/${route}`) : require(`../pages/Error404Page.jsx`);
 
         this.executeActions(PageComponent.actions || {}, context)
-            .then(() => {
-                response.send(React.renderToString(React.createElement(PageComponent, {
-                    context: context.context
-                })));
+            .then(() => response.send(React.renderToString(React.createElement(PageComponent, {
+                context
+            }))))
+            .catch(error => {
+                logError(error);
+                response.send(`Error 500<br/> ${error}`);
             });
     }
 
     executeActions(actions, context) {
         logInfo('Выполняем actions страницы');
-        return Promise.settle(_.map(actions, (payload, action) => context.executeAction(action, payload)))
+        return Promise.all(_.map(actions, (payload, action) => context.executeAction(action, payload)))
             .then(results => {
                 logInfo('Все actions страницы выполнены');
                 return results;
