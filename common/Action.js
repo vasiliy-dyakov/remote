@@ -1,10 +1,10 @@
 export default class Action {
-    constructor({ context, payload, done, ...options }) {
+    constructor({ context, payload = {} }) {
         this.context = context;
-        this.payload = payload;
-        this.done = done;
-        this.options = options;
-        this.execute();
+
+        return new Promise((resolve, reject) => {
+            this.execute({ context, payload, resolve, reject });
+        });
     }
 
     execute() {

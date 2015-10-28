@@ -30,7 +30,7 @@ export default class Application {
             context = new Context(),
             PageComponent = !_.isUndefined(route) ? require(`../pages/${route}`) : require(`../pages/Error404Page.jsx`);
 
-        this.executeActions(PageComponent.actions || {}, context)
+        this.executeActions(PageComponent.actions, context)
             .then(() => response.send(React.renderToString(React.createElement(PageComponent, {
                 context
             }))))
@@ -40,13 +40,11 @@ export default class Application {
             });
     }
 
-    executeActions(actions, context) {
+    executeActions(actions = [], context) {
         logInfo('Выполняем actions страницы');
-        return Promise.all(_.map(actions, ({ action, payload }) => context.executeAction(action, payload)))
-            .then(results => {
-                logInfo('Все actions страницы выполнены');
-                return results;
-            });
+        logInfo('actions', actions);
+
+        return Promise.all(actions.map(({ action, payload }) => new action({ context, payload })));
     }
 
     getRoute(path) {
