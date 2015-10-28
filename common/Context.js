@@ -11,14 +11,17 @@ export default class Context {
         this._context = dispatcher.createContext({});
     }
 
-    executeAction(action, payload) {
+    executeAction(Action, payload) {
         return new Promise((resolve, reject) => {
-            // TODO: на клиенте require не хотелось бы использовать
-            require('../actions/' + action)(this._context, payload, (error, payload) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(payload);
+            new Action({
+                context: this._context,
+                payload,
+                done(error, payload) {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(payload);
+                    }
                 }
             });
         });

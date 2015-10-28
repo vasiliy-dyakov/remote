@@ -42,7 +42,7 @@ export default class Application {
 
     executeActions(actions, context) {
         logInfo('Выполняем actions страницы');
-        return Promise.all(_.map(actions, (payload, action) => context.executeAction(action, payload)))
+        return Promise.all(_.map(actions, ({ action, payload }) => context.executeAction(action, payload)))
             .then(results => {
                 logInfo('Все actions страницы выполнены');
                 return results;
