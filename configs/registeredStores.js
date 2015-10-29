@@ -1,5 +1,5 @@
-import user from '../stores/user';
+import UserStore from '../stores/UserStore';
 
 export default [
-    user
+    UserStore
 ];
