@@ -6,14 +6,14 @@ import Footer from '../footer/Footer.jsx';
 export default class LayoutCommon extends React.Component {
     render() {
         return <html>
-            <Head context={this.props.context}/>
+            <Head/>
             <body>
-                <div className='container'>
-                    <Header context={this.props.context}/>
-                    <div className='content'>
+                <div className='layout__container_common'>
+                    <Header/>
+                    <div className='layout__content'>
                         {this.props.children}
                     </div>
-                    <Footer context={this.props.context}/>
+                    <Footer/>
                 </div>
             </body>
         </html>;

@@ -8,7 +8,7 @@ export default class IndexPage extends React.Component {
     ];
 
     render() {
-        return <Layout context={this.props.context}>
+        return <Layout>
             Content is here.
         </Layout>;
     }
