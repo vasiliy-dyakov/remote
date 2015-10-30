@@ -40,7 +40,9 @@ export default class Application {
     }
 
     renderPage(PageComponent, context) {
-        return React.renderToString(<ContextProvider context={context}>{() => <PageComponent/>}</ContextProvider>);
+        var html = React.renderToString(<ContextProvider context={context}>{() => <PageComponent/>}</ContextProvider>);
+
+        return `<!DOCTYPE html>\n${html}`;
     }
 
     executeActions(actions = [], context) {
