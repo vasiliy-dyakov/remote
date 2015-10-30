@@ -20,7 +20,7 @@ var contextMock = {
 
 describe('Footer', () => {
 
-    it('should', () => {
+    it('should have correct text inside', () => {
 
         // Render a checkbox with label in the document
         var checkbox = TestUtils.renderIntoDocument(<ContextProvider context={contextMock}>
