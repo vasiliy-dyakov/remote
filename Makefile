@@ -11,7 +11,7 @@ $(NPM_ROOT):
 
 .PHONY: server
 server: $(NPM_ROOT) $(DIST_CLIENT)
-	$(NPM_BIN)/supervisor -e 'js|jsx' -i 'dist,client,node_modules,__tests__' server/index.js
+	$(NPM_BIN)/supervisor -e 'js|jsx' -i 'dist,client,__tests__' server/index.js
 
 $(DIST_CLIENT): $(NPM_ROOT)
 	$(NPM_BIN)/browserify $(BROWSERIFY_PARAMS)
