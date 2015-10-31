@@ -1,6 +1,6 @@
 import Store from '../common/Store';
 
-export default class UserStore extends Store {
+export default class User extends Store {
     static storeName = 'user';
 
     static handlers = {

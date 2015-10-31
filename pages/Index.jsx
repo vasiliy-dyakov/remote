@@ -1,8 +1,8 @@
 import React from 'react';
 import Layout from '../components/layout/LayoutCommon.jsx';
-import CookieParseAction from '../actions/CookieParseAction';
+import CookieParseAction from '../actions/CookieParse';
 
-export default class IndexPage extends React.Component {
+export default class Index extends React.Component {
     static actions = [
         { action: CookieParseAction, payload: {} }
     ];

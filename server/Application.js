@@ -2,13 +2,13 @@ import express from 'express';
 import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import Promise from 'bluebird';
 import routes from '../configs/routes';
 import Context from '../common/Context';
 import ContextProvider from '../common/ContextProvider.jsx';
 
-var logInfo = debug('framework:info:Application'),
-    logError = debug('framework:error:Application');
+var logInfo = debug('framework:info:Application');
 
 export default class Application {
     constructor() {
@@ -29,20 +29,27 @@ export default class Application {
 
         var route = this.getRoute(request.path),
             context = new Context(),
-            PageComponent = !_.isUndefined(route) ? require(`../pages/${route}`) : require(`../pages/Error404Page.jsx`);
+            isFound = !_.isUndefined(route),
+            PageComponent = isFound ? require(`../pages/${route}`) : require('../pages/Error404.jsx');
+
+        if (!isFound) {
+            response.status(404);
+        }
 
         this.executeActions(PageComponent.actions, context)
             .then(() => response.send(this.renderPage(PageComponent, context)))
             .catch(error => {
-                logError(error);
-                response.send(`Error 500<br/> ${error}`);
+                response.status(500);
+                response.send(this.renderPage(require('../pages/Error500.jsx'), context, {
+                    message: process.env.NODE_ENV === 'development' ? error + '' : 'Internal server error'
+                }));
             });
     }
 
-    renderPage(PageComponent, context) {
-        var html = React.renderToString(<ContextProvider context={context}>{() => <PageComponent/>}</ContextProvider>);
+    renderPage(PageComponent, context, props = {}) {
+        var html = ReactDOMServer.renderToString(<ContextProvider context={context}>{() => <PageComponent {...props}/>}</ContextProvider>);
 
-        return `<!DOCTYPE html>\n${html}`;
+        return `<!DOCTYPE html>${html}`;
     }
 
     executeActions(actions = [], context) {

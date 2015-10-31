@@ -1,7 +1,7 @@
 {
-    "name": "remote",
+    "name": "framework",
     "version": "0.0.1",
-    "description": "Site for remote work for groups of developers",
+    "description": "",
     "author": "Vasiliy Dyakov",
     "private": true,
     "dependencies": {

@@ -18,10 +18,7 @@ lint: $(NPM_ROOT)
 
 .PHONY: test
 test:
-	npm test
-
-$(WEB_DRIVER): $(NPM_ROOT)
-	$(NPM_BIN)/webdriver-manager update
+	@npm test
 
 .PHONY: clean
 clean:
