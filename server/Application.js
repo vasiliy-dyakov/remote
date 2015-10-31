@@ -77,7 +77,7 @@ export default class Application {
             response.sendFile(rootDir + path);
         } else {
             logInfo('Запрошенный файл статики не удовлетворяет разрешенным шаблонам', path);
-            response.sendStatus(404);
+            response.sendStatus(403);
         }
     }
 }
