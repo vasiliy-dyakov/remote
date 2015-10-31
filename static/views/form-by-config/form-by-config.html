@@ -1,8 +1,0 @@
-<form action="{{formConfig.action}}">
-    <div ng-repeat="field in formConfig.fields" class="field-row field-row_name_{{field.name}}">
-        <div class="field-row__title" ng-if="field.title">{{field.title}}</div>
-        <div class="field-row__field">
-            <ng-include src="field.templateUrl"></ng-include>
-        </div>
-    </div>
-</form>
