@@ -13,6 +13,14 @@ export default class Store extends BaseStore {
 
     setState(state) {
         _.assign(this.state, state);
-        return this.state;
+        this.emitChange();
+    }
+
+    dehydrate() {
+        return this.getState();
+    }
+
+    rehydrate(state) {
+        this.setState(state);
     }
 }

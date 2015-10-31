@@ -18,4 +18,12 @@ export default class Context {
     getStore(...options) {
         return this._context.getStore(...options);
     }
+
+    dehydrate(...options) {
+        return this._context.dehydrate(...options);
+    }
+
+    rehydrate(...options) {
+        return this._context.rehydrate(...options);
+    }
 }

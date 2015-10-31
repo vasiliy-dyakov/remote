@@ -3,13 +3,12 @@ import env from '../configs/env';
 
 debug.enable(env.DEBUG_CLIENT);
 
-var state = window.__STATE__,
-    logInfo = debug('framework:info:client:Application');
+var logInfo = debug('framework:info:client:Application');
 
 class Application {
-    constructor() {
+    constructor(state) {
         logInfo('client state', state);
     }
 }
 
-new Application();
+window.onload = () => new Application(window.__STATE__);

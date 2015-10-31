@@ -10,6 +10,7 @@ import Context from '../common/Context';
 import ContextProvider from '../common/ContextProvider.jsx';
 
 var logInfo = debug('framework:info:Application'),
+    logError = debug('framework:error:Application'),
     staticRoot = process.env.STATIC_ROOT,
     rootDir = __dirname.split('/').slice(0, -1).join('/');
 
@@ -43,6 +44,7 @@ export default class Application {
         this.executeActions(PageComponent.actions, context)
             .then(() => response.send(this.renderPage(PageComponent, context)))
             .catch(error => {
+                logError(error);
                 response.status(500);
                 response.send(this.renderPage(require('../pages/Error500.jsx'), context, {
                     message: process.env.NODE_ENV === 'development' ? error + '' : 'Internal server error'
@@ -52,10 +54,12 @@ export default class Application {
 
     renderPage(PageComponent, context, props = {}) {
         var html = ReactDOMServer.renderToString(<ContextProvider context={context}>
-            {() => <PageComponent {...props}/>}
-        </ContextProvider>);
+                {() => <PageComponent {...props}/>}
+            </ContextProvider>),
+            // @TODO: подумать, как сделать красивее передачу состояния на клиент
+            scriptWithData = `<script>window.__STATE__ = ${JSON.stringify(context.dehydrate())};</script>`;
 
-        return `<!DOCTYPE html>${html}`;
+        return `<!DOCTYPE html> ${html} ${scriptWithData}`;
     }
 
     executeActions(actions = [], context) {
