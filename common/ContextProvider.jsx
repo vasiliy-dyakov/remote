@@ -3,12 +3,14 @@ import React from 'react';
 export default class ContextProvider extends React.Component {
 
     static childContextTypes = {
-        getStore: React.PropTypes.func.isRequired
+        getStore: React.PropTypes.func.isRequired,
+        staticRoot: React.PropTypes.string.isRequired
     };
 
     getChildContext() {
         return {
-            getStore: (...options) => this.props.context.getStore(...options)
+            getStore: (...options) => this.props.context.getStore(...options),
+            staticRoot: this.props.context.staticRoot
         };
     }
 

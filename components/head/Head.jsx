@@ -3,6 +3,7 @@ import React from 'react';
 export default class Head extends React.Component {
 
     static contextTypes = {
+        staticRoot: React.PropTypes.string,
         getStore: React.PropTypes.func.isRequired
     };
 
@@ -13,6 +14,8 @@ export default class Head extends React.Component {
 
         return <head>
             <title>{title}</title>
+            <link rel='stylesheet/less' type='text/css' href={`${this.context.staticRoot || ''}/components/application.less`}/>
+            <script src={`${this.context.staticRoot || ''}/node_modules/less/dist/less.js`}></script>
         </head>;
     }
 }

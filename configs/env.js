@@ -1,5 +1,6 @@
 export default {
     NODE_ENV: 'development',
     PORT: 3000,
-    DEBUG: '*,-babel*'
+    DEBUG: '*,-babel*',
+    STATIC_ROOT: '/static'
 };

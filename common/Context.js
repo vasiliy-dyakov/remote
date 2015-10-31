@@ -6,8 +6,9 @@ var dispatcher = dispatchr.createDispatcher({
 });
 
 export default class Context {
-    constructor() {
+    constructor(props = {}) {
         this._context = dispatcher.createContext({});
+        Object.assign(this, props);
     }
 
     dispatch(...options) {

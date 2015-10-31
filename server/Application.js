@@ -5,10 +5,13 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Promise from 'bluebird';
 import routes from '../configs/routes';
+import staticConfig from '../configs/static';
 import Context from '../common/Context';
 import ContextProvider from '../common/ContextProvider.jsx';
 
-var logInfo = debug('framework:info:Application');
+var logInfo = debug('framework:info:Application'),
+    staticRoot = process.env.STATIC_ROOT,
+    rootDir = __dirname.split('/').slice(0, -1).join('/');
 
 export default class Application {
     constructor() {
@@ -18,6 +21,7 @@ export default class Application {
     initServer() {
         var server = express();
 
+        server.get(staticRoot + '/*', this.staticRequestHandler.bind(this));
         server.get('/*', this.requestHandler.bind(this));
 
         server.listen(process.env.PORT);
@@ -28,7 +32,7 @@ export default class Application {
         logInfo('Запросили путь', request.path);
 
         var route = this.getRoute(request.path),
-            context = new Context(),
+            context = new Context({ staticRoot }),
             isFound = !_.isUndefined(route),
             PageComponent = isFound ? require(`../pages/${route}`) : require('../pages/Error404.jsx');
 
@@ -47,7 +51,9 @@ export default class Application {
     }
 
     renderPage(PageComponent, context, props = {}) {
-        var html = ReactDOMServer.renderToString(<ContextProvider context={context}>{() => <PageComponent {...props}/>}</ContextProvider>);
+        var html = ReactDOMServer.renderToString(<ContextProvider context={context}>
+            {() => <PageComponent {...props}/>}
+        </ContextProvider>);
 
         return `<!DOCTYPE html>${html}`;
     }
@@ -61,5 +67,17 @@ export default class Application {
 
     getRoute(path) {
         return routes[path];
+    }
+
+    staticRequestHandler(request, response) {
+        var path = request.path.replace(staticRoot, '');
+
+        if (_.find(staticConfig.enabledPatterns, pattern => pattern.test(path))) {
+            logInfo('Запросили файл статики', path);
+            response.sendFile(rootDir + path);
+        } else {
+            logInfo('Запрошенный файл статики не удовлетворяет разрешенным шаблонам', path);
+            response.sendStatus(404);
+        }
     }
 }
