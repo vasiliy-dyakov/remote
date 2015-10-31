@@ -10,12 +10,13 @@ export default class Head extends React.Component {
     render() {
         var title = this.context.getStore('user').getState().anonymus
             ? 'Аноним'
-            : 'Не аноним';
+            : 'Не аноним',
+            staticRoot = this.context.staticRoot;
 
         return <head>
             <title>{title}</title>
-            <link rel='stylesheet/less' type='text/css' href={`${this.context.staticRoot || ''}/components/application.less`}/>
-            <script src={`${this.context.staticRoot || ''}/node_modules/less/dist/less.js`}></script>
+            <link rel='stylesheet/less' type='text/css' href={`${staticRoot}/components/application.less`}/>
+            <script src={`${staticRoot}/node_modules/less/dist/less.js`}></script>
         </head>;
     }
 }
