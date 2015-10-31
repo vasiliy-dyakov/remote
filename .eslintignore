@@ -1,5 +1,4 @@
 .git/**
 .githooks/**
 node_modules/**
-static/**
-test/**
+dist/**

@@ -1,5 +1,7 @@
 NPM_ROOT = node_modules
 NPM_BIN = $(NPM_ROOT)/.bin
+DIST_CLIENT = dist/Application.js
+BROWSERIFY_PARAMS = client/Application.js -t babelify --outfile $(DIST_CLIENT) --debug
 
 .PHONY: all
 all: $(NPM_ROOT)
@@ -8,8 +10,14 @@ $(NPM_ROOT):
 	@npm install
 
 .PHONY: server
-server: $(NPM_ROOT)
-	@supervisor -e 'js|jsx' server/index.js
+server: $(NPM_ROOT) $(DIST_CLIENT)
+	$(NPM_BIN)/supervisor -e 'js|jsx' -i 'dist,client,node_modules,__tests__' server/index.js
+
+$(DIST_CLIENT): $(NPM_ROOT)
+	$(NPM_BIN)/browserify $(BROWSERIFY_PARAMS)
+
+static: $(NPM_ROOT)
+	$(NPM_BIN)/watchify $(BROWSERIFY_PARAMS) --verbose
 
 .PHONY: lint
 lint: $(NPM_ROOT)

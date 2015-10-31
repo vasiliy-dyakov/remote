@@ -3,11 +3,9 @@
     "excludeFiles": [
         ".git/**",
         ".githooks/**",
-        "static/libs/**",
         "node_modules/**",
         "*.json",
-        "test/karma.conf.js",
-        "test/protractor.conf.js"
+        "dist/**"
     ],
     "requireCurlyBraces": [
         "if",
