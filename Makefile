@@ -1,7 +1,7 @@
 NPM_ROOT = node_modules
 NPM_BIN = $(NPM_ROOT)/.bin
 DIST_CLIENT = dist/Application.js
-BROWSERIFY_PARAMS = client/Application.js -t babelify --outfile $(DIST_CLIENT) --debug
+BROWSERIFY_PARAMS = client/Application.js -t babelify --outfile $(DIST_CLIENT) --debug --verbose
 
 .PHONY: all
 all: $(NPM_ROOT)
@@ -17,7 +17,7 @@ $(DIST_CLIENT): $(NPM_ROOT)
 	$(NPM_BIN)/browserify $(BROWSERIFY_PARAMS)
 
 static: $(NPM_ROOT)
-	$(NPM_BIN)/watchify $(BROWSERIFY_PARAMS) --verbose
+	$(NPM_BIN)/watchify $(BROWSERIFY_PARAMS)
 
 .PHONY: lint
 lint: $(NPM_ROOT)
