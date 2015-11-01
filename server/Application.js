@@ -8,6 +8,7 @@ import routes from '../configs/routes';
 import staticConfig from '../configs/static';
 import Context from '../common/Context';
 import ContextProvider from '../common/ContextProvider.jsx';
+import ApplicationComponent from '../components/application/Application.jsx';
 
 var logInfo = debug('framework:info:Application'),
     logError = debug('framework:error:Application'),
@@ -54,7 +55,9 @@ export default class Application {
 
     renderPage(PageComponent, context, props = {}) {
         var html = ReactDOMServer.renderToString(<ContextProvider context={context}>
-                {() => <PageComponent {...props}/>}
+                {() => <ApplicationComponent>
+                    <PageComponent {...props}/>
+                </ApplicationComponent>}
             </ContextProvider>);
 
         return `<!DOCTYPE html> ${html} ${this.getScripts(context)}`;
