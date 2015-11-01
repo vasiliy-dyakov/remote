@@ -11,4 +11,4 @@ class Application {
     }
 }
 
-window.onload = () => new Application(window.__STATE__);
+new Application(window.__STATE__);

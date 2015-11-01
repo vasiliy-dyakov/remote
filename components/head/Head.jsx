@@ -16,7 +16,6 @@ export default class Head extends React.Component {
         return <head>
             <title>{title}</title>
             <link rel='stylesheet/less' type='text/css' href={`${staticRoot}/client/application.less`}/>
-            <script src={`${staticRoot}/node_modules/less/dist/less.js`}></script>
         </head>;
     }
 }

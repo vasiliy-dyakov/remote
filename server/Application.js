@@ -55,11 +55,20 @@ export default class Application {
     renderPage(PageComponent, context, props = {}) {
         var html = ReactDOMServer.renderToString(<ContextProvider context={context}>
                 {() => <PageComponent {...props}/>}
-            </ContextProvider>),
-            // @TODO: подумать, как сделать красивее передачу состояния на клиент
-            scriptWithData = `<script>window.__STATE__ = ${JSON.stringify(context.dehydrate())};</script>`;
+            </ContextProvider>);
 
-        return `<!DOCTYPE html> ${html} ${scriptWithData}`;
+        return `<!DOCTYPE html> ${html} ${this.getScripts(context)}`;
+    }
+
+    getScripts(context) {
+        var scripts = [
+            '/node_modules/less/dist/less.js',
+            '/dist/Application.js'
+        ].map(path => `<script src="${context.staticRoot}${path}"></script>`);
+
+        scripts.unshift(`<script>window.__STATE__ = ${JSON.stringify(context.dehydrate())};</script>`);
+
+        return scripts.join('');
     }
 
     executeActions(actions = [], context) {

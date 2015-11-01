@@ -2,7 +2,6 @@ import React from 'react';
 import Head from '../head/Head.jsx';
 import Header from '../header/Header.jsx';
 import Footer from '../footer/Footer.jsx';
-import FooterScripts from '../footerScripts/FooterScripts.jsx';
 
 export default class LayoutCommon extends React.Component {
     render() {
@@ -16,7 +15,6 @@ export default class LayoutCommon extends React.Component {
                     </div>
                     <Footer/>
                 </div>
-                <FooterScripts/>
             </body>
         </html>;
     }
