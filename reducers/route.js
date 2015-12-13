@@ -1,4 +1,4 @@
-export default (state = 'Error500Page', action) => {
+export default (state = '', action) => {
     switch (action.type) {
         default:
             return state;

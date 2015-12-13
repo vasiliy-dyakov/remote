@@ -16,7 +16,8 @@ var logInfo = debug('framework:info:Application'),
     logError = debug('framework:error:Application'),
     staticRoot = process.env.STATIC_ROOT,
     rootDir = __dirname.split('/').slice(0, -1).join('/'),
-    ERROR_404_PAGE = 'Error404Page';
+    ERROR_404_PAGE = 'Error404Page',
+    ERROR_500_PAGE = 'Error500Page';
 
 export default class Application {
     constructor() {
@@ -52,7 +53,10 @@ export default class Application {
                 logError(error);
                 response.status(500);
                 response.send(this.renderPage({
-                    PageComponent: pages['Error500Page'],
+                    PageComponent: pages[ERROR_500_PAGE],
+                    store: {
+                        route: ERROR_500_PAGE
+                    },
                     props: {
                         message: process.env.NODE_ENV === 'development' ? error + '' : 'Internal server error'
                     }
