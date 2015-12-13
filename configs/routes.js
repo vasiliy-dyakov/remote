@@ -1,3 +1,4 @@
 export default {
-    '/': 'Index.jsx'
+    '/': 'Index.jsx',
+    '/demo/': 'Demo.jsx'
 };

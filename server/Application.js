@@ -4,11 +4,11 @@ import debug from 'debug';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Promise from 'bluebird';
+import { combineReducers, createStore } from 'redux';
+import { Provider } from 'react-redux';
 import routes from '../configs/routes';
 import staticConfig from '../configs/static';
-import Context from '../common/Context';
-import ContextProvider from '../common/ContextProvider.jsx';
-import ApplicationComponent from '../components/application/Application.jsx';
+import * as reducers from '../reducers';
 
 var logInfo = debug('framework:info:Application'),
     logError = debug('framework:error:Application'),
@@ -34,51 +34,71 @@ export default class Application {
         logInfo('Запросили путь', request.path);
 
         var route = this.getRoute(request.path),
-            context = new Context({ staticRoot }),
             isFound = !_.isUndefined(route),
-            PageComponent = isFound ? require(`../pages/${route}`) : require('../pages/Error404.jsx');
+            PageComponent = isFound ? require(`../pages/${route}`) : require('../pages/Error404.jsx'),
+            { actions = [] } = PageComponent;
 
         if (!isFound) {
             response.status(404);
         }
 
-        this.executeActions(PageComponent.actions, context)
-            .then(() => response.send(this.renderPage(PageComponent, context)))
+        this.createStore(actions)
+            .then((store) => response.send(this.renderPage({ PageComponent, store })))
             .catch(error => {
                 logError(error);
                 response.status(500);
-                response.send(this.renderPage(require('../pages/Error500.jsx'), context, {
-                    message: process.env.NODE_ENV === 'development' ? error + '' : 'Internal server error'
+                response.send(this.renderPage({
+                    PageComponent: require('../pages/Error500.jsx'),
+                    props: {
+                        message: process.env.NODE_ENV === 'development' ? error + '' : 'Internal server error'
+                    }
                 }));
             });
     }
 
-    renderPage(PageComponent, context, props = {}) {
-        var html = ReactDOMServer.renderToString(<ContextProvider context={context}>
-                {() => <ApplicationComponent>
-                    <PageComponent {...props}/>
-                </ApplicationComponent>}
-            </ContextProvider>);
-
-        return `<!DOCTYPE html> ${html} ${this.getScripts(context)}`;
+    createStore() {
+        return new Promise((resolve) => {
+            logInfo('store', createStore(combineReducers(reducers)).getState());
+            resolve(createStore(combineReducers(reducers)));
+        });
     }
 
-    getScripts(context) {
+    renderPage({ PageComponent, store = {}, props = {} }) {
+        return `<!DOCTYPE html><html>
+            <head>
+                <title>${this.getTitle()}</title>
+                ${this.getCss()}
+            </head>
+            <body>
+                <div id='application'>
+                    ${ReactDOMServer.renderToString(<Provider store={store}>
+                        <PageComponent {...props}/>
+                    </Provider>)}
+                </div>
+                ${this.getScripts(store)}
+            </body>
+        </html>`;
+    }
+
+    getTitle() {
+        return 'Redux';
+    }
+
+    getCss() {
+        return ['/components/application/application.less'].map(path => {
+            return `<link rel="stylesheet/less" type="text/css" href="${staticRoot}${path}"/>`;
+        });
+    }
+
+    getScripts(store) {
         var scripts = [
             '/node_modules/less/dist/less.js',
             '/dist/Application.js'
-        ].map(path => `<script src="${context.staticRoot}${path}"></script>`);
+        ].map(path => `<script src="${staticRoot}${path}"></script>`);
 
-        scripts.unshift(`<script>window.__STATE__ = ${JSON.stringify(context.dehydrate())};</script>`);
+        scripts.unshift(`<script>window.__STATE__ = ${JSON.stringify(store.getState())};</script>`);
 
         return scripts.join('');
-    }
-
-    executeActions(actions = [], context) {
-        logInfo('Выполняем actions страницы');
-        logInfo('actions', actions);
-
-        return Promise.all(actions.map(({ action, payload }) => new action({ context, payload })));
     }
 
     getRoute(path) {
