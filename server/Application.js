@@ -15,7 +15,8 @@ import initialState from '../configs/initialState';
 var logInfo = debug('framework:info:Application'),
     logError = debug('framework:error:Application'),
     staticRoot = process.env.STATIC_ROOT,
-    rootDir = __dirname.split('/').slice(0, -1).join('/');
+    rootDir = __dirname.split('/').slice(0, -1).join('/'),
+    ERROR_404_PAGE = 'Error404Page';
 
 export default class Application {
     constructor() {
@@ -35,14 +36,13 @@ export default class Application {
     requestHandler(request, response) {
         logInfo('Запросили путь', request.path);
 
-        var route = this.getRoute(request.path),
-            isFound = !_.isUndefined(route),
-            PageComponent = isFound ? pages[route] : pages['Error404Page'],
+        var route = this.getRoute(request.path) || ERROR_404_PAGE,
+            PageComponent = pages[route],
             { actions = [] } = PageComponent;
 
         logInfo('route', route);
 
-        if (!isFound) {
+        if (route === ERROR_404_PAGE) {
             response.status(404);
         }
 
