@@ -15,8 +15,8 @@ export default class extends Component {
 
     text = '';
 
-    onChange(text) {
-        this.text = text;
+    onChange(event) {
+        this.text = event.target.value;
     }
 
     addTodo() {

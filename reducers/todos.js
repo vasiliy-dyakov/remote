@@ -1,22 +1,12 @@
 import { omit } from 'lodash';
 
-var initialState = {
-    ids: [1],
-    byId: {
-        1: {
-            id: 1,
-            text: 'Сделать фреймворк'
-        }
-    }
-};
-
-export default function todoList(state = initialState, action) {
+export default function todoList(state = {}, action) {
     switch (action.type) {
         case 'ADD_TODO':
             var newId = state.ids[state.ids.length - 1] + 1;
             return {
                 ...state,
-                ids: state.todos.concat(newId),
+                ids: state.ids.concat(newId),
                 byId: {
                     ...state.byId,
                     [newId]: {

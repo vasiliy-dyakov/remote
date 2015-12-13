@@ -8,7 +8,9 @@ import { combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import routes from '../configs/routes';
 import staticConfig from '../configs/static';
+import * as pages from '../pages';
 import * as reducers from '../reducers';
+import initialState from '../configs/initialState';
 
 var logInfo = debug('framework:info:Application'),
     logError = debug('framework:error:Application'),
@@ -35,20 +37,22 @@ export default class Application {
 
         var route = this.getRoute(request.path),
             isFound = !_.isUndefined(route),
-            PageComponent = isFound ? require(`../pages/${route}`) : require('../pages/Error404.jsx'),
+            PageComponent = isFound ? pages[route] : pages['Error404Page'],
             { actions = [] } = PageComponent;
+
+        logInfo('route', route);
 
         if (!isFound) {
             response.status(404);
         }
 
-        this.createStore(actions)
+        this.createStore(actions, route)
             .then((store) => response.send(this.renderPage({ PageComponent, store })))
             .catch(error => {
                 logError(error);
                 response.status(500);
                 response.send(this.renderPage({
-                    PageComponent: require('../pages/Error500.jsx'),
+                    PageComponent: pages['Error500Page'],
                     props: {
                         message: process.env.NODE_ENV === 'development' ? error + '' : 'Internal server error'
                     }
@@ -56,10 +60,12 @@ export default class Application {
             });
     }
 
-    createStore() {
+    createStore(actions, route) {
         return new Promise((resolve) => {
-            logInfo('store', createStore(combineReducers(reducers)).getState());
-            resolve(createStore(combineReducers(reducers)));
+            resolve(createStore(combineReducers(reducers), Object.assign({},
+                initialState,
+                { route }
+            )));
         });
     }
 
@@ -70,11 +76,11 @@ export default class Application {
                 ${this.getCss()}
             </head>
             <body>
-                <div id='application'>
-                    ${ReactDOMServer.renderToString(<Provider store={store}>
+                <div id='application'>${ReactDOMServer.renderToString(
+                    <Provider store={store}>
                         <PageComponent {...props}/>
-                    </Provider>)}
-                </div>
+                    </Provider>
+                )}</div>
                 ${this.getScripts(store)}
             </body>
         </html>`;
