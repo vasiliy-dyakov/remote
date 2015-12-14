@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Button, Input } from 'react-bootstrap';
 import addTodo from '../../actions/addTodo';
 
 @connect(state => ({
@@ -31,8 +32,8 @@ export default class extends Component {
                 <input type='checkbox'/>
                 {todos.byId[id].text}
             </div>)}
-            <input type='text' onChange={this.onChange.bind(this)}/>
-            <button onClick={this.addTodo.bind(this)}>Добавить</button>
+            <Input type='text' onChange={this.onChange.bind(this)}/>
+            <Button onClick={this.addTodo.bind(this)} bsStyle='primary'>Добавить</Button>
         </div>;
     }
 }
