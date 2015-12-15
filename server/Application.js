@@ -3,21 +3,19 @@ import _ from 'lodash';
 import debug from 'debug';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import Promise from 'bluebird';
 import { combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import routes from '../configs/routes';
 import staticConfig from '../configs/static';
-import * as pages from '../pages';
 import * as reducers from '../reducers';
 import initialState from '../configs/initialState';
+import ApplicationComponent from '../components/application/Application.jsx';
 
 var logInfo = debug('framework:info:Application'),
     logError = debug('framework:error:Application'),
     staticRoot = process.env.STATIC_ROOT,
     rootDir = __dirname.split('/').slice(0, -1).join('/'),
-    ERROR_404_PAGE = 'Error404Page',
-    ERROR_500_PAGE = 'Error500Page';
+    ERROR_404_PAGE = 'Error404Page';
 
 export default class Application {
     constructor() {
@@ -37,43 +35,31 @@ export default class Application {
     requestHandler(request, response) {
         logInfo('Запросили путь', request.path);
 
-        var route = this.getRoute(request.path) || ERROR_404_PAGE,
-            PageComponent = pages[route],
-            { actions = [] } = PageComponent;
+        try {
+            var route = this.getRoute(request.path) || ERROR_404_PAGE,
+                store = createStore(
+                    combineReducers(reducers),
+                    Object.assign({}, initialState, { route })
+                ),
+                html = this.getHtml(store);
 
-        logInfo('route', route);
+            logInfo('route', route);
 
-        if (route === ERROR_404_PAGE) {
-            response.status(404);
+            if (route === ERROR_404_PAGE) {
+                response.status(404);
+            }
+
+        } catch (error) {
+            logError(error);
+            response.status(500);
+            html = `<h1>Error 500</h1>
+                <p>${process.env.NODE_ENV === 'development' ? error + '' : 'Internal server error'}</p>`;
+        } finally {
+            response.send(html);
         }
-
-        this.createStore(actions, route)
-            .then((store) => response.send(this.renderPage({ PageComponent, store })))
-            .catch(error => {
-                logError(error);
-                response.status(500);
-                response.send(this.renderPage({
-                    PageComponent: pages[ERROR_500_PAGE],
-                    store: {
-                        route: ERROR_500_PAGE
-                    },
-                    props: {
-                        message: process.env.NODE_ENV === 'development' ? error + '' : 'Internal server error'
-                    }
-                }));
-            });
     }
 
-    createStore(actions, route) {
-        return new Promise((resolve) => {
-            resolve(createStore(combineReducers(reducers), Object.assign({},
-                initialState,
-                { route }
-            )));
-        });
-    }
-
-    renderPage({ PageComponent, store = {}, props = {} }) {
+    getHtml(store = {}) {
         return `<!DOCTYPE html><html>
             <head>
                 <title>${this.getTitle()}</title>
@@ -82,7 +68,7 @@ export default class Application {
             <body>
                 <div id='application'>${ReactDOMServer.renderToString(
                     <Provider store={store}>
-                        <PageComponent {...props}/>
+                        <ApplicationComponent/>
                     </Provider>
                 )}</div>
                 ${this.getScripts(store)}

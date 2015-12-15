@@ -1,26 +1,18 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import * as pages from '../../pages';
 
-export default class Application extends React.Component {
-
-    static contextTypes = {
-        getStore: React.PropTypes.func.isRequired,
-        staticRoot: React.PropTypes.string
+@connect(context => ({
+    route: context.route
+}))
+export default class extends Component {
+    static propTypes = {
+        route: PropTypes.string.isRequired
     };
 
     render() {
-        var title = this.context.getStore('user').getState().anonymus
-                ? 'Аноним'
-                : 'Не аноним',
-            staticRoot = this.context.staticRoot;
+        var PageComponent = pages[this.props.route];
 
-        return <html id='application'>
-            <head>
-                <title>{title}</title>
-                <link rel='stylesheet/less' type='text/css' href={`${staticRoot}/components/application/application.less`}/>
-            </head>
-            <body>
-                {this.props.children}
-            </body>
-        </html>;
+        return <PageComponent/>;
     }
 }
