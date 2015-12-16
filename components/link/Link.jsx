@@ -16,7 +16,7 @@ export default class extends Component {
     changeRoute = bindActionCreators(changeRoute, this.props.dispatch);
 
     onClick(event) {
-        var newRoute = routes[this.props.href];
+        var newRoute = routes[this.props.href] || 'Error404Page';
 
         event.preventDefault();
         if (newRoute !== this.props.route) {
