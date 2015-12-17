@@ -21,6 +21,9 @@ export default class extends Component {
         event.preventDefault();
         if (newRoute !== this.props.route) {
             this.changeRoute(newRoute);
+            history.pushState({
+                route: newRoute
+            }, '', this.props.href);
         }
     }
 

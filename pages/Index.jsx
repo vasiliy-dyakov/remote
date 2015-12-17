@@ -6,7 +6,7 @@ export default class extends React.Component {
     render() {
         return <Layout>
             <p>Основное содержимое страницы.</p>
-            <p><Link href='/demo1/'>Демо</Link></p>
+            <p><Link href='/demo/'>Демо</Link></p>
         </Layout>;
     }
 }
