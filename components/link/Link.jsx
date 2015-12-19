@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import routes from '../../configs/routes';
 import changeRoute from '../../actions/changeRoute';
 
-@connect(context => ({
-    route: context.route
+@connect(state => ({
+    route: state.route
 }))
 export default class extends Component {
     static propTypes = {
@@ -13,14 +12,12 @@ export default class extends Component {
         route: PropTypes.string.isRequired
     };
 
-    changeRoute = bindActionCreators(changeRoute, this.props.dispatch);
-
     onClick(event) {
         var newRoute = routes[this.props.href] || 'Error404Page';
 
         event.preventDefault();
         if (newRoute !== this.props.route) {
-            this.changeRoute(newRoute);
+            this.props.dispatch(changeRoute(newRoute));
             history.pushState({
                 route: newRoute
             }, '', this.props.href);

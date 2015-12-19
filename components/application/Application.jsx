@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as pages from '../../pages';
 import changeRoute from '../../actions/changeRoute';
@@ -13,8 +12,6 @@ export default class extends Component {
         route: PropTypes.string.isRequired
     };
 
-    changeRoute = bindActionCreators(changeRoute, this.props.dispatch);
-
     componentDidMount() {
         window.onpopstate = this.onPopState.bind(this);
         history.replaceState({
@@ -23,7 +20,7 @@ export default class extends Component {
     }
 
     onPopState(event) {
-        this.changeRoute(event.state.route);
+        this.props.dispatch(changeRoute(event.state.route));
     }
 
     render() {
